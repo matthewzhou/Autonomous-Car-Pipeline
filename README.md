@@ -6,7 +6,7 @@ The goal of this project is to develop a pipeline to process a video stream from
 - Calculation of the radius of curvature of the road
 - Automated detection of car objects on the road with a placed bounding box
 
-* ![Final Video Output](./result.mp4)
+* ![Final Video Output](./result.gif)
 
 The labeled data for vehicle and non-vehicle examples to train the vehicle detection classifier come from a combination of the [**GTI vehicle image database**](http://www.gti.ssr.upm.es/data/Vehicle_database.html), the [**KITTI vision benchmark suite**](http://www.cvlibs.net/datasets/kitti/), and examples extracted from the project video itself.
 
