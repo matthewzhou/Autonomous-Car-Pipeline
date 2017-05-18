@@ -33,6 +33,7 @@ Finally, the camera calibration matrix and distortion coefficients were used wit
 ### Step 2: Perspective Transform
 The goal of this step is to transform the undistorted image to a "birds eye view" of the road which focuses only on the lane lines and displays them in such a way that they appear to be relatively parallel to eachother (as opposed to the converging lines you would normally see). To achieve the perspective transformation I first applied the OpenCV functions `getPerspectiveTransform` and `warpPerspective` which take a matrix of four source points on the undistorted image and remaps them to four destination points on the warped image. The source and destination points were selected manually by visualizing the locations of the lane lines on a series of test images.
 
+* ![Undistorting](./images/warped.png)
 
 ### Step 3: Apply Binary Thresholds
 In this step I attempted to convert the warped image to different color spaces and create binary thresholded images which highlight only the lane lines and ignore everything else. 
@@ -42,6 +43,8 @@ I found that the following color channels and thresholds did a good job of ident
 - The B channel from the Lab color space, with a min threshold of 155 and an upper threshold of 200, did a better job than the S channel in identifying the yellow lines, but completely ignored the white lines. 
 
 I chose to create a combined binary threshold based on the three above mentioned binary thresholds, to create one combination thresholded image which does a great job of highlighting almost all of the white and yellow lane lines.
+
+    * ![Thresholding](./images/thresholds.png)
 
 ### Steps 4: Fitting a polynomial to the lane lines, calculating vehicle position and radius of curvature:
 At this point I was able to use the combined binary image to isolate only the pixels belonging to lane lines. The next step was to fit a polynomial to each lane line, which was done by:
@@ -70,6 +73,7 @@ right_curverad = ((1 + (2*right_fit_cr[0]*np.max(lefty) + right_fit_cr[1])**2)**
 
 The final radius of curvature was taken by average the left and right curve radiuses.
 
+* ![Thresholding](./images/filled.png)
 ---
 ### Step 5: Creating Features for SVM Classifier
 
@@ -118,6 +122,9 @@ For the window search, I built a function that would scan through an image given
 
 Different window sizes were used to examine cars at sizes given distance from the camera. I utilized 4 window scans -- with sizes of 96x96, 144x144, 192x192, and 192x192 with a small offset in starting position. The overlap would be set at 0.75 in order to allow multiple windows to validate that a car was present. 
 
+* ![Windows](./images/windows_detected.png)
+
+
 ### Combining Windows With A Heatmap
 When a car is detected, multiple boxes are drawn on the car, so I used a **heatmap** to combine boxes into a single box.
 
@@ -127,8 +134,7 @@ After the heatmap is created, windows are constructed arond the continuous nonze
 
 More details about a **label** function can be found [here](https://docs.scipy.org/doc/scipy-0.16.0/reference/generated/scipy.ndimage.measurements.label.html).
 
-Check the images folder for image_with_heatmap.png to see an example of the detected windows after false positives have been eliminated.
-
+    * ![Heat Map](./images/image_with_heatmap.png)
 
 ### Step 8: Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 The final step in processing the images was to plot the polynomials on to the warped image, fill the space between the polynomials to highlight the lane that the car is in, use another perspective trasformation to unwarp the image from birds eye back to its original perspective, and print the distance from center and radius of curvature on to the final annotated image.
