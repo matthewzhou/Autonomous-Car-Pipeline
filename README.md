@@ -44,7 +44,7 @@ I found that the following color channels and thresholds did a good job of ident
 
 I chose to create a combined binary threshold based on the three above mentioned binary thresholds, to create one combination thresholded image which does a great job of highlighting almost all of the white and yellow lane lines.
 
-    * ![Thresholding](./images/thresholds.png)
+* ![Thresholding](./images/thresholds.png)
 
 ### Steps 4: Fitting a polynomial to the lane lines, calculating vehicle position and radius of curvature:
 At this point I was able to use the combined binary image to isolate only the pixels belonging to lane lines. The next step was to fit a polynomial to each lane line, which was done by:
@@ -134,7 +134,7 @@ After the heatmap is created, windows are constructed arond the continuous nonze
 
 More details about a **label** function can be found [here](https://docs.scipy.org/doc/scipy-0.16.0/reference/generated/scipy.ndimage.measurements.label.html).
 
-    * ![Heat Map](./images/image_with_heatmap.png)
+* ![Heat Map](./images/image_with_heatmap.png)
 
 ### Step 8: Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 The final step in processing the images was to plot the polynomials on to the warped image, fill the space between the polynomials to highlight the lane that the car is in, use another perspective trasformation to unwarp the image from birds eye back to its original perspective, and print the distance from center and radius of curvature on to the final annotated image.
